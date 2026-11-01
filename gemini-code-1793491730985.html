@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMV APEX GROUP ™ | ZIP File Generator & Viewer Pro</title>
+    
+    <!-- === GLOBAL OPENGRAPH & TWITTER CARD PROTOCOL === -->
+    <meta name="theme-color" content="#FFD700">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🔥 Ultimate ZIP File Generator & Viewer Pro | Free Instant Access">
+    <meta property="og:description" content="Engineered by RMV APEX GROUP ™. Fast, local, in-browser compression and extraction. No sign-up required.">
+    <meta property="og:image" content="https://placehold.co/1200x630/0A0A1A/FFD700?text=ZIP+File+Generator+%26+Viewer+Pro%0A%0ABy+RMV+APEX+GROUP+%E2%84%A2&font=Montserrat">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- === GLOBAL DUAL-TELEMETRY (GOOGLE ANALYTICS 4) === -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0D5RV7EFT"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LFT0NRT70J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-M0D5RV7EFT'); 
+      gtag('config', 'G-LFT0NRT70J'); 
+    </script>
+
+    <!-- Base Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- JSZip Library (For Local ZIP Processing) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        :root { 
+            --primary: #FFD700; 
+            --secondary: #111111; 
+            --bg-dark: #050505; 
+            --surface: #121212; 
+            --surface-light: #1C1C1C; 
+            --text-light: #FFFFFF; 
+            --text-muted: #94A3B8; 
+            --accent: #00E676; 
+            --danger: #FF1744; 
+            --z-critical: 9999; 
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.5); 
+        }
+
+        * { box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: var(--text-light); margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
+        .glass-panel { background: rgba(18, 18, 18, 0.92); border: 1px solid rgba(255, 215, 0, 0.22); border-radius: 16px; box-shadow: var(--shadow-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .btn-glow:hover { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+        .apex-input { width: 100%; padding: 0.85rem 1rem; border-radius: 0.75rem; background: #0A0A0A; border: 1px solid #333; color: #fff; font-size: 0.95rem; }
+        .apex-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2); }
+        
+        .floating-widget-container { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 12px; z-index: 9999; }
+        .float-btn { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; cursor: pointer; border: none; box-shadow: 0 8px 25px rgba(0,0,0,0.6); text-decoration: none; transition: transform 0.2s; }
+        .float-btn:hover { transform: scale(1.1); }
+        .btn-wa { background: #25D366; } 
+        .btn-support { background: linear-gradient(135deg, #FF5E5B 0%, #FF1744 100%); color: white; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: none; justify-content: center; align-items: center; z-index: var(--z-critical); }
+        .modal-overlay.active { display: flex !important; }
+
+        #toast-container { position: fixed; top: 25px; right: 25px; z-index: 10005; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast { background: #00E676; color: #111; font-weight: 700; padding: 1rem 1.5rem; border-radius: 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 350px; pointer-events: auto; }
+        
+        .view-content { display: none; }
+        .view-content.active { display: block !important; }
+
+        .rmv-ad-container { text-align: center; margin: 2rem auto; display: flex; justify-content: center; width: 100%; min-height: 90px; }
+        .rmv-ad-box { background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(255, 215, 0, 0.25); border-radius: 12px; padding: 1rem; color: #777; width: 100%; max-width: 728px; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 0.8rem; }
+        
+        .clock-matrix { background: rgba(255,215,0,0.08); color: var(--primary); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 700; font-family: monospace; font-size: 0.85rem; border: 1px solid rgba(255,215,0,0.3); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        
+        /* Utility overrides */
+        .text-apex-primary { color: var(--primary); }
+        .border-apex-primary { border-color: var(--primary); }
+        .bg-apex-primary { background-color: var(--primary); }
+        .text-apex-success { color: var(--accent); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <nav class="glass-panel rounded-none px-6 py-4 flex justify-between items-center sticky top-0 z-50 flex-wrap gap-4 border-t-0 border-x-0">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">👑</span>
+            <div>
+                <h1 class="text-base md:text-lg font-black tracking-wider uppercase text-apex-primary leading-tight">RMV APEX GROUP ™</h1>
+                <p class="text-[10px] text-gray-400 font-mono tracking-wider">Universal Omni-Tool System™ | Enterprise Architecture</p>
+            </div>
+        </div>
+
+        <!-- Live World Geo Time Matrix (Kolkata, India / IST) -->
+        <div class="clock-matrix" id="liveClock">📍 Kolkata, India | Initializing Chronometer...</div>
+
+        <div class="flex items-center gap-2.5">
+            <button onclick="RMV_App.triggerLead('Custom Enterprise Architecture Suite')" class="bg-gradient-to-r from-[#FFD700] to-amber-600 hover:brightness-110 text-black font-black py-2 px-4 rounded-xl shadow-lg text-xs flex items-center gap-1.5 uppercase cursor-pointer">
+                <i class="fa-solid fa-paper-plane"></i> Request Custom SaaS
+            </button>
+            <button onclick="RMV_App.showModal('pricingModal')" class="bg-[#121212] border border-[#FFD700]/40 hover:border-[#FFD700] text-apex-primary font-bold py-2 px-4 rounded-xl btn-glow text-xs flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-gem text-xs"></i> 15-Tier Price Matrix
+            </button>
+            <button onclick="RMV_App.exportHTML()" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-xl text-xs cursor-pointer" title="Export Standalone Package">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- App Layout Container -->
+    <div class="flex flex-1 flex-col md:flex-row">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-72 glass-panel rounded-none border-r border-y-0 p-5 flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-y-auto shrink-0">
+            <button id="btn-dossier" onclick="RMV_App.switchTab('view-dossier')" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-apex-primary text-black font-black flex items-center gap-3 text-sm shadow cursor-pointer"><i class="fa-solid fa-file-zipper w-5 text-center"></i> ZIP Generator Pro</button>
+            <button id="btn-fractal" onclick="RMV_App.switchTab('view-fractal')" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-3 text-sm cursor-pointer"><i class="fa-solid fa-network-wired w-5 text-center"></i> 99M Fractal Matrix</button>
+            <button id="btn-ecosystem" onclick="RMV_App.switchTab('view-ecosystem')" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-3 text-sm cursor-pointer"><i class="fa-solid fa-globe w-5 text-center"></i> Digital Ecosystem</button>
+            <button onclick="RMV_App.showModal('pricingModal')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-3 text-sm cursor-pointer"><i class="fa-solid fa-tags w-5 text-center"></i> 15-Tier Pricing Matrix</button>
+            <button onclick="RMV_App.showModal('supportModal')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-3 text-sm cursor-pointer"><i class="fa-solid fa-heart w-5 text-center text-rose-500"></i> Support Creator Vault</button>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto">
+            <div class="max-w-5xl mx-auto">
+                
+                <!-- VIEW 1: ZIP UTILITY DOSSIER -->
+                <section id="view-dossier" class="view-content active">
+                    <div class="mb-8">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-apex-primary/20 text-apex-primary border border-apex-primary/30">Official Enterprise Tooling</span>
+                            <span class="text-xs text-gray-400">Pillars 40M-50M (Developer Utilities)</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">ZIP FILE GENERATOR & VIEWER PRO</h2>
+                        <p class="text-xl font-bold text-apex-primary mt-1">Ramesh Mewalal Vishwakarma <span class="text-amber-400">🚩</span></p>
+                    </div>
+
+                    <!-- PROMPT & EXECUTION CONSOLE (ZIP LOGIC) -->
+                    <div class="bg-[#121212] border border-amber-400/30 rounded-2xl p-6 md:p-8 shadow-2xl relative mb-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-[10px] uppercase font-mono text-amber-400 font-bold bg-amber-400/10 px-3 py-1 rounded-full"><i class="fa-solid fa-shield-halved mr-1"></i> Local Client-Side Processing</span>
+                            <span class="text-[10px] font-mono text-gray-400">Engine: JSZip Data Blob</span>
+                        </div>
+
+                        <!-- Utility Tabs -->
+                        <div class="flex gap-4 border-b border-gray-800 mb-6 pb-2">
+                            <button onclick="RMV_ZipTool.switchMode('compress')" id="tabCompress" class="text-sm font-bold text-amber-400 border-b-2 border-amber-400 pb-2 cursor-pointer transition">Compress Files (Generator)</button>
+                            <button onclick="RMV_ZipTool.switchMode('extract')" id="tabExtract" class="text-sm font-bold text-gray-500 hover:text-gray-300 pb-2 cursor-pointer transition">Extract & View (Viewer)</button>
+                        </div>
+
+                        <!-- COMPRESS MODE -->
+                        <div id="modeCompress" class="animate-fade">
+                            <label class="block text-xs font-bold text-gray-300 mb-2">1. Select Files to Archive:</label>
+                            <div class="relative mb-4">
+                                <input type="file" id="zipInputFiles" multiple class="w-full p-3.5 bg-[#0A0A0A] border border-gray-800 rounded-xl text-xs text-white outline-none focus:border-amber-400 file:mr-4 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#FFD700] file:text-black hover:file:bg-amber-400 cursor-pointer">
+                            </div>
+
+                            <label class="block text-xs font-bold text-gray-300 mb-2">2. Desired Archive Name (Optional):</label>
+                            <input type="text" id="zipOutputName" class="w-full p-3.5 bg-[#0A0A0A] border border-gray-800 rounded-xl text-xs text-white mb-6 outline-none focus:border-amber-400 font-mono" placeholder="RMV_Apex_Archive">
+
+                            <button onclick="RMV_ZipTool.generateZip()" class="w-full bg-[#FFD700] hover:brightness-110 text-black font-black py-4 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition shadow-[0_0_15px_rgba(255,215,0,0.3)] flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-zipper"></i> Generate & Download ZIP ➔
+                            </button>
+                        </div>
+
+                        <!-- EXTRACT MODE -->
+                        <div id="modeExtract" class="hidden animate-fade">
+                            <label class="block text-xs font-bold text-gray-300 mb-2">Select ZIP Archive to Inspect:</label>
+                            <input type="file" id="zipExtractInput" accept=".zip" class="w-full p-3.5 bg-[#0A0A0A] border border-gray-800 rounded-xl text-xs text-white mb-6 outline-none focus:border-amber-400 file:mr-4 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-cyan-400 file:text-black hover:file:bg-cyan-300 cursor-pointer">
+
+                            <button onclick="RMV_ZipTool.viewZip()" class="w-full bg-cyan-400 hover:brightness-110 text-black font-black py-4 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition shadow-[0_0_15px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-folder-tree"></i> Inspect Archive ➔
+                            </button>
+                        </div>
+
+                        <!-- Output Console -->
+                        <div class="mt-8">
+                            <label class="block text-xs font-bold text-gray-400 mb-2 font-mono flex justify-between">
+                                <span>EXECUTION OUTPUT LOG:</span>
+                                <span class="cursor-pointer hover:text-white" onclick="RMV_ZipTool.clearLog()"><i class="fa-solid fa-eraser"></i> Clear</span>
+                            </label>
+                            <div id="zipResultBox" class="p-5 bg-[#0A0A0A] rounded-xl text-xs font-mono text-amber-300 border border-gray-800 h-[220px] overflow-y-auto whitespace-pre-wrap leading-relaxed shadow-inner">System ready. Awaiting input files...</div>
+                        </div>
+                    </div>
+
+                    <!-- Headquarters & Operations -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="glass-panel p-6 cursor-pointer hover:border-apex-primary transition" onclick="RMV_App.triggerLead('Global Headquarters Consultation')">
+                            <h3 class="font-bold text-white text-sm uppercase tracking-wider mb-3 flex items-center gap-2 text-apex-primary"><i class="fa-solid fa-location-dot"></i> Registered Global Headquarters</h3>
+                            <p class="text-gray-300 text-xs md:text-sm leading-relaxed">
+                                <strong class="text-white">RMV APEX GROUP ™</strong><br>
+                                Shop No. 01, Kenny House, Plot No. 79,<br>
+                                Lady Fatima Road, Opposite Mayfair Green,<br>
+                                Poisar, Kandivali West, Mumbai - 400067, Maharashtra, India.
+                            </p>
+                        </div>
+                        <div class="glass-panel p-6">
+                            <h3 class="font-bold text-white text-sm uppercase tracking-wider mb-3 flex items-center gap-2 text-apex-primary"><i class="fa-solid fa-headset"></i> Executive Communications</h3>
+                            <p class="text-gray-300 text-xs md:text-sm leading-relaxed">
+                                📞 <strong>Direct WhatsApp Hotline:</strong> <a href="https://wa.me/918652025006" target="_blank" class="text-apex-success font-bold hover:underline">+91 8652025006</a><br>
+                                📧 <strong>Corporate Inbox:</strong> <a href="mailto:rmvapexgroup@gmail.com" class="text-white hover:text-apex-primary">rmvapexgroup@gmail.com</a><br>
+                                🔗 <strong>Founder Card:</strong> <a href="https://ramesh27952.wcard.me" target="_blank" class="text-apex-primary font-bold hover:underline">https://ramesh27952.wcard.me</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="rmv-ad-container"><div class="rmv-ad-box"><span>[Google AdSense Policy-Compliant Reserved Unit]</span></div></div>
+                </section>
+
+                <!-- VIEW 2: 99M FRACTAL MATRIX ENGINE -->
+                <section id="view-fractal" class="view-content">
+                    <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-black text-white">99,999,999 Fractal Matrix Engine</h2>
+                            <p class="text-xs md:text-sm text-apex-success mt-1">Autonomous algorithmic cluster synthesizer.</p>
+                        </div>
+                        <button onclick="RMV_App.synthesizeMatrix()" class="bg-apex-primary text-black font-extrabold px-4 py-2 rounded-xl text-xs hover:brightness-110 transition shadow cursor-pointer">
+                            🔄 Refresh Fractal Clusters
+                        </button>
+                    </div>
+                    <div class="glass-panel p-6 mb-6">
+                        <div id="fractalClusterGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 max-h-[600px] overflow-y-auto pr-2"></div>
+                    </div>
+                </section>
+
+                <!-- VIEW 3: OMNI DIGITAL ECOSYSTEM -->
+                <section id="view-ecosystem" class="view-content">
+                    <div class="mb-6">
+                        <h2 class="text-2xl md:text-3xl font-black text-white">The Omni Social & Digital Ecosystem</h2>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="ecosystemGrid"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- VOLUNTARY GOOGLE FORMS LEAD CAPTURE MODAL -->
+    <div id="leadModal" class="modal-overlay">
+        <div class="glass-panel p-8 max-w-lg w-full mx-4 relative border-t-4 border-t-apex-primary">
+            <button onclick="RMV_App.hideModal('leadModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer">×</button>
+            <h2 class="text-2xl font-black text-apex-primary mb-1 uppercase tracking-wider">Deployment Inquiry</h2>
+            <p class="text-gray-300 text-xs mb-5">Submit your enterprise requirements directly to our engineering advisory desk. (No-CORS Secure)</p>
+            
+            <textarea id="leadReq" class="apex-input h-32 mb-3 text-xs leading-relaxed" placeholder="Describe your exact software requirement..."></textarea>
+            <input type="text" id="leadName" class="apex-input mb-3 text-xs" placeholder="Full Legal Name">
+            <input type="email" id="leadEmail" class="apex-input mb-3 text-xs" placeholder="Verified Business Email ✉️">
+            <input type="text" id="leadAddress" class="apex-input mb-3 text-xs" placeholder="Full Address / City">
+            <input type="tel" id="leadPhone" class="apex-input mb-5 text-xs" placeholder="WhatsApp Number (with Country Code)">
+            
+            <button onclick="RMV_App.submitLeadForm()" class="bg-apex-primary text-black font-black w-full py-3.5 rounded-xl hover:brightness-110 transition shadow-lg text-xs uppercase tracking-wider cursor-pointer">
+                Submit Inquiry (Free) ➔
+            </button>
+        </div>
+    </div>
+
+    <!-- 15-TIER PRICING MATRIX MODAL -->
+    <div id="pricingModal" class="modal-overlay">
+        <div class="glass-panel p-6 md:p-8 max-w-7xl w-full mx-4 max-h-[90vh] overflow-y-auto relative border-t-4 border-t-apex-primary">
+            <button onclick="RMV_App.hideModal('pricingModal')" class="absolute top-4 right-5 text-gray-400 hover:text-white text-3xl font-light cursor-pointer">×</button>
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-1">15-TIER GLOBAL PRICING MATRIX</h2>
+            </div>
+            <div class="pricing-grid mb-8" id="priceTierGrid"></div>
+        </div>
+    </div>
+
+    <!-- SUPPORT CREATOR / DONATION VAULT MODAL -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="glass-panel p-8 max-w-md w-full mx-4 text-center relative border-t-4 border-t-rose-500">
+            <button onclick="RMV_App.hideModal('supportModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer">×</button>
+            <div class="w-14 h-14 bg-rose-500/20 text-rose-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-3"><i class="fa-solid fa-heart"></i></div>
+            <h2 class="text-2xl font-black text-white mb-1 uppercase tracking-wider">Support Creator Vault</h2>
+            <p class="text-gray-400 text-xs mb-6">If this free enterprise software delivered value, consider supporting future development!</p>
+            
+            <div class="flex flex-col gap-3 mb-5 text-xs font-bold">
+                <a href="https://ko-fi.com/rameshmewalalvishwakarma" target="_blank" class="py-3.5 px-4 rounded-xl text-white bg-[#29abe0] hover:brightness-110 flex items-center justify-center gap-2 shadow"><i class="fa-solid fa-mug-hot"></i> Support on Ko-Fi</a>
+                <a href="https://buymeacoffee.com/rameshmewalalvishwakarma" target="_blank" class="py-3.5 px-4 rounded-xl text-black bg-[#FFDD00] hover:brightness-110 flex items-center justify-center gap-2 shadow"><i class="fa-solid fa-pizza-slice"></i> Buy Me a Coffee</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container & FABs -->
+    <div id="toast-container"></div>
+    <div class="floating-widget-container">
+        <button onclick="window.open('https://wa.me/918652025006', '_blank')" class="float-btn btn-wa" title="Direct WhatsApp Hotline"><i class="fa-brands fa-whatsapp"></i></button>
+        <button onclick="RMV_App.showModal('supportModal')" class="float-btn btn-support" title="Support Creator Vault"><i class="fa-solid fa-heart"></i></button>
+    </div>
+
+    <!-- Universal ES5-Compatible JavaScript Engine -->
+    <script>
+        // 1. LIVE WORLD GEO TIME MATRIX (Kolkata, India / Asia/Kolkata)
+        function updateClock() {
+            var clockEl = document.getElementById('liveClock');
+            if(!clockEl) return;
+            var now = new Date();
+            var str = "";
+            try {
+                var options = { timeZone: 'Asia/Kolkata', weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                str = new Intl.DateTimeFormat('en-US', options).format(now);
+            } catch(e) {
+                var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+                var ist = new Date(utc + (3600000 * 5.5));
+                var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                var h = ist.getHours(), m = ist.getMinutes(), s = ist.getSeconds();
+                var ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12; h = h ? h : 12;
+                str = days[ist.getDay()] + ', ' + months[ist.getMonth()] + ' ' + ist.getDate() + ', ' + ist.getFullYear() + ' ' + (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s + ' ' + ampm;
+            }
+            clockEl.innerHTML = "📍 Kolkata, India (IST) | " + str;
+            requestAnimationFrame(updateClock);
+        }
+        requestAnimationFrame(updateClock);
+
+        // 2. ZIP PROCESSING LOGIC (ES5)
+        var RMV_ZipTool = {
+            switchMode: function(mode) {
+                var mc = document.getElementById('modeCompress');
+                var me = document.getElementById('modeExtract');
+                var tc = document.getElementById('tabCompress');
+                var te = document.getElementById('tabExtract');
+                
+                if (mode === 'compress') {
+                    mc.style.display = 'block'; me.style.display = 'none';
+                    tc.className = 'text-sm font-bold text-amber-400 border-b-2 border-amber-400 pb-2 cursor-pointer transition';
+                    te.className = 'text-sm font-bold text-gray-500 hover:text-gray-300 pb-2 cursor-pointer transition';
+                } else {
+                    mc.style.display = 'none'; me.style.display = 'block';
+                    tc.className = 'text-sm font-bold text-gray-500 hover:text-gray-300 pb-2 cursor-pointer transition';
+                    te.className = 'text-sm font-bold text-amber-400 border-b-2 border-amber-400 pb-2 cursor-pointer transition';
+                }
+            },
+            
+            log: function(msg, isError) {
+                var box = document.getElementById('zipResultBox');
+                if(!box) return;
+                var prefix = isError ? "❌ " : "✅ ";
+                box.innerHTML += "\n" + prefix + msg;
+                box.scrollTop = box.scrollHeight;
+            },
+            
+            clearLog: function() {
+                var box = document.getElementById('zipResultBox');
+                if(box) box.innerHTML = "System initialized. Awaiting input...";
+            },
+
+            generateZip: function() {
+                this.clearLog();
+                var input = document.getElementById('zipInputFiles');
+                var nameInput = document.getElementById('zipOutputName').value.trim();
+                var finalName = nameInput ? nameInput + ".zip" : "RMV_Apex_Archive_" + Date.now() + ".zip";
+                
+                if (!input.files || input.files.length === 0) {
+                    this.log("Error: No files selected for compression.", true);
+                    return;
+                }
+
+                if (typeof JSZip === 'undefined') {
+                    this.log("Error: JSZip core library failed to load.", true);
+                    return;
+                }
+
+                var zip = new JSZip();
+                this.log("Processing " + input.files.length + " file(s) into memory...");
+                
+                var fileCount = input.files.length;
+                var processed = 0;
+                var self = this;
+
+                // Validate sizes before processing
+                var totalSize = 0;
+                for(var j = 0; j < fileCount; j++) {
+                    totalSize += input.files[j].size;
+                }
+                if (totalSize > 300 * 1024 * 1024) { // Soft limit 300MB for browser memory
+                    this.log("Warning: Processing massive payload (" + (totalSize/1024/1024).toFixed(2) + " MB). Browser may stall temporarily.");
+                }
+
+                for (var i = 0; i < fileCount; i++) {
+                    (function(file) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            zip.file(file.name, e.target.result);
+                            self.log("Mapped: " + file.name + " (" + (file.size / 1024).toFixed(2) + " KB)");
+                            processed++;
+                            
+                            if (processed === fileCount) {
+                                self.log("All files mapped. Initializing DEFLATE compression engine...");
+                                zip.generateAsync({type:"blob", compression: "DEFLATE"}).then(function(content) {
+                                    var url = window.URL.createObjectURL(content);
+                                    var a = document.createElement("a");
+                                    a.style.display = "none";
+                                    a.href = url;
+                                    a.download = finalName;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                    self.log("SUCCESS: ZIP generated and downloaded as '" + finalName + "'");
+                                    RMV_App.showToast("Archive generation complete!");
+                                }).catch(function(err) {
+                                    self.log("Compression engine error: " + err.message, true);
+                                });
+                            }
+                        };
+                        reader.onerror = function() {
+                            self.log("Error reading file: " + file.name, true);
+                            processed++;
+                        }
+                        reader.readAsArrayBuffer(file);
+                    })(input.files[i]);
+                }
+            },
+
+            viewZip: function() {
+                this.clearLog();
+                var input = document.getElementById('zipExtractInput');
+                
+                if (!input.files || input.files.length === 0) {
+                    this.log("Error: No ZIP archive selected for inspection.", true);
+                    return;
+                }
+
+                if (typeof JSZip === 'undefined') {
+                    this.log("Error: JSZip core library failed to load.", true);
+                    return;
+                }
+                
+                var file = input.files[0];
+                if (file.name.toLowerCase().indexOf('.zip') === -1) {
+                    this.log("Warning: File does not have a .zip extension, attempting decryption anyway...", true);
+                }
+
+                this.log("Mounting archive: " + file.name + " (" + (file.size/1024).toFixed(2) + " KB)...");
+                var self = this;
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    JSZip.loadAsync(e.target.result).then(function(zip) {
+                        self.log("Archive parsed successfully. Reading directory index...");
+                        var count = 0;
+                        zip.forEach(function (relativePath, zipEntry) {
+                            var type = zipEntry.dir ? "📁 DIR " : "📄 FILE";
+                            var sizeMsg = zipEntry.dir ? "" : " (Compressed Node)";
+                            self.log("  " + type + " - " + zipEntry.name + sizeMsg);
+                            count++;
+                        });
+                        self.log("Inspection complete. Total nodes found: " + count);
+                        RMV_App.showToast("Archive mapping successful.");
+                    }).catch(function(err) {
+                         self.log("Archive parsing failed. File may be corrupted or encrypted: " + err.message, true);
+                    });
+                };
+                reader.onerror = function() {
+                    self.log("Failed to load local file buffer.", true);
+                }
+                reader.readAsArrayBuffer(file);
+            }
+        };
+
+        // 3. MASTER ENTERPRISE ENGINE (ES5 OBJECT LITERAL)
+        var RMV_App = {
+            tiers: [
+                { id: 1, name: "Basic Utility SaaS Suite", level: "🟢 Starter", inr: "₹1,499+" },
+                { id: 6, name: "Finance & Real Estate Pro", level: "🟣 Enterprise", inr: "₹4,999 – ₹50,000+" },
+                { id: 8, name: "Digital & E-commerce Deployments", level: "🟣 Enterprise", inr: "₹7,500 – ₹1,00,000+" },
+                { id: 14, name: "Supreme Enterprise Solutions", level: "👑 Supreme", inr: "₹5,00,000 – ₹25,00,000+" }
+            ],
+            ecosystem: [
+                { name: "Primary Corporate Website", url: "https://rmvapexgroup.blogspot.com", icon: "🌐" },
+                { name: "Integrated Marketplace", url: "https://rmvapexgroupmarketplaces.blogspot.com", icon: "🛒" },
+                { name: "WhatsApp Direct Hotline", url: "https://wa.me/918652025006", icon: "📞" }
+            ],
+
+            init: function() {
+                this.renderEcosystem();
+                this.renderPricingMatrix();
+                this.setupNeuromarketing();
+            },
+
+            showModal: function(id) { document.getElementById(id).classList.add('active'); },
+            hideModal: function(id) { document.getElementById(id).classList.remove('active'); },
+            
+            showToast: function(msg, type) {
+                type = type || 'success';
+                var container = document.getElementById('toast-container');
+                if(!container) return;
+                var toast = document.createElement('div');
+                toast.className = 'toast bg-apex-' + (type === 'danger' ? 'danger' : 'success');
+                toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>' + msg + '</span>';
+                container.appendChild(toast);
+                setTimeout(function() { toast.remove(); }, 3500);
+            },
+
+            switchTab: function(tabId) {
+                var tabs = ['view-dossier', 'view-fractal', 'view-ecosystem'];
+                for(var i = 0; i < tabs.length; i++) {
+                    var el = document.getElementById(tabs[i]);
+                    if(el) el.classList.remove('active');
+                }
+                var target = document.getElementById(tabId);
+                if(target) target.classList.add('active');
+
+                var btnMap = { 'view-dossier': 'btn-dossier', 'view-fractal': 'btn-fractal', 'view-ecosystem': 'btn-ecosystem' };
+                for(var k in btnMap) {
+                    var btn = document.getElementById(btnMap[k]);
+                    if(btn) {
+                        btn.className = (k === tabId) 
+                            ? "nav-btn w-full text-left px-4 py-3 rounded-xl bg-apex-primary text-black font-black flex items-center gap-3 text-sm shadow cursor-pointer"
+                            : "nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-3 text-sm cursor-pointer";
+                    }
+                }
+            },
+
+            setupNeuromarketing: function() {
+                var self = this;
+                document.addEventListener('mouseleave', function(e) {
+                    if(e.clientY <= 0 && !sessionStorage.getItem('rmv_exit_shown')) {
+                        sessionStorage.setItem('rmv_exit_shown', 'true');
+                        self.showModal('supportModal'); 
+                    }
+                });
+            },
+
+            triggerLead: function(itemName) {
+                var reqBox = document.getElementById('leadReq');
+                if(reqBox) {
+                    reqBox.value = "Hello RMV APEX GROUP ™,\n\nI am requesting deployment/consultation for:\n\n👉 [ " + itemName + " ]\n\nPlease initialize the onboarding pipeline.";
+                }
+                this.showModal('leadModal');
+            },
+
+            submitLeadForm: function() {
+                var req = document.getElementById('leadReq').value.trim();
+                var name = document.getElementById('leadName').value.trim();
+                var email = document.getElementById('leadEmail').value.trim();
+                var address = document.getElementById('leadAddress').value.trim();
+                var phone = document.getElementById('leadPhone').value.trim();
+
+                if(!req || !name || !email || !phone) {
+                    this.showToast('Please fill in required fields.', 'danger');
+                    return;
+                }
+
+                try {
+                    var formData = new FormData();
+                    formData.append('entry.111111111', name);
+                    formData.append('entry.222222222', email);
+                    formData.append('entry.333333333', address);
+                    formData.append('entry.444444444', phone);
+                    formData.append('entry.555555555', req);
+
+                    // No-CORS fetch to Google Forms Webhook
+                    fetch('https://docs.google.com/forms/d/e/1FAIpQLSdR8Iwixr6IaUb3cT65jLUtQD2waKh-PKD0rKABgbYZEG7Lwg/formResponse', {
+                        method: 'POST', mode: 'no-cors', body: formData
+                    });
+                } catch(e) {}
+
+                this.showToast('Inquiry recorded! Architect notified.');
+                this.hideModal('leadModal');
+            },
+
+            synthesizeMatrix: function() {
+                var container = document.getElementById('fractalClusterGrid');
+                if(!container) return;
+                var html = '';
+                for(var i = 1; i <= 6; i++) {
+                    html += '<div class="glass-panel p-4 hover:border-apex-primary cursor-pointer group" onclick="RMV_App.triggerLead(\'Fractal Node ' + i + '\')">' +
+                        '<div class="flex justify-between items-center mb-2"><span class="text-[10px] text-gray-500 font-bold">NODE-' + i + '</span><span>⚙️</span></div>' +
+                        '<h4 class="font-extrabold text-sm text-white mb-1">Autonomous Cluster ' + i + '</h4>' +
+                        '<p class="text-[11px] text-gray-400 mb-3">Enterprise algorithmic node operating on client-side memory physics.</p>' +
+                        '<button class="text-apex-primary border border-apex-primary/30 font-bold text-[11px] py-1 px-3 rounded">Initialize ➔</button></div>';
+                }
+                container.innerHTML = html;
+                this.showToast('99M Fractal Matrix Refreshed.');
+            },
+
+            renderEcosystem: function() {
+                var container = document.getElementById('ecosystemGrid');
+                if(!container) return;
+                var html = '';
+                for(var i = 0; i < this.ecosystem.length; i++) {
+                    var e = this.ecosystem[i];
+                    html += '<div onclick="window.open(\'' + e.url + '\', \'_blank\')" class="glass-panel p-4 flex items-center gap-3 cursor-pointer hover:border-apex-primary transition">' +
+                        '<span class="text-2xl">' + e.icon + '</span><div><h4 class="text-xs font-bold text-white">' + e.name + '</h4><span class="text-[10px] text-gray-500 font-mono truncate max-w-[180px] block">' + e.url + '</span></div></div>';
+                }
+                container.innerHTML = html;
+            },
+
+            renderPricingMatrix: function() {
+                var container = document.getElementById('priceTierGrid');
+                if(!container) return;
+                var html = '';
+                for(var i = 0; i < this.tiers.length; i++) {
+                    var t = this.tiers[i];
+                    html += '<div class="glass-panel p-0 flex flex-col group cursor-pointer" onclick="RMV_App.triggerLead(\'' + t.name + ' (Tier ' + t.id + ')\')">' +
+                        '<div class="bg-black/50 p-5 border-b border-gray-800 relative"><div class="absolute top-0 right-0 bg-apex-primary text-black text-[10px] font-black px-3 py-1 rounded-bl-lg">' + t.level + '</div>' +
+                        '<h4 class="text-apex-primary font-mono text-[10px] uppercase mb-1">Tier ' + t.id + '</h4><h3 class="text-white font-extrabold text-base mb-2">' + t.name + '</h3>' +
+                        '<span class="text-xl font-black text-white">' + t.inr + '</span></div>' +
+                        '<div class="p-5 flex-1 bg-black/30"><button class="w-full bg-apex-primary text-black font-black py-3 rounded-xl uppercase text-xs">Deploy ' + t.level.replace(/[^A-Za-z]/g, '') + '</button></div></div>';
+                }
+                container.innerHTML = html;
+            },
+
+            exportHTML: function() {
+                var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+                var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = "RMV_APEX_ZIP_Generator_Pro_" + Date.now() + ".html";
+                document.body.appendChild(a); a.click(); document.body.removeChild(a); window.URL.revokeObjectURL(url);
+                this.showToast("Exported Standalone App!");
+            }
+        };
+
+        if(document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() { RMV_App.init(); });
+        } else {
+            RMV_App.init();
+        }
+    </script>
+</body>
+</html>
