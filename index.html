@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#00E5FF">
+<meta name="description" content="RMV APEX GROUP — Premium digital solutions, innovative applications, business resources and AI-powered tools.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="🔥 RMV APEX GROUP™ | Premium Digital Headquarters">
+<meta property="og:description" content="Discover digital tools, innovative solutions and premium services. Engineered by RMV APEX GROUP™.">
+<meta property="og:image" content="https://placehold.co/1200x630/0A0A1A/00E5FF?text=RMV+APEX+GROUP%0A%0ABy+RMV+APEX+GROUP&font=Montserrat">
+<meta name="twitter:card" content="summary_large_image">
+<title>RMV APEX GROUP™ | Digital Headquarters</title>
+
+<style>
+:root {
+  --bg:#0A0A1A;
+  --card:#111827;
+  --cyan:#00E5FF;
+  --white:#F8FAFC;
+  --muted:#A1A1B5;
+  --line:rgba(0,229,255,.20);
+  --gold:#FFD166;
+  --radius:20px;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+a {text-decoration:none;color:inherit}
+button,input,textarea {font:inherit}
+button,a { -webkit-tap-highlight-color:transparent }
+.container {width:min(1120px,92%);margin:auto}
+header {
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,26,.92);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.nav {
+  min-height:70px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;
+}
+.logo {font-size:18px;font-weight:900;letter-spacing:-.5px}
+.logo span {color:var(--cyan)}
+.nav-links {display:flex;gap:20px;align-items:center}
+.nav-links a {font-size:13px;color:var(--muted)}
+.nav-links a:hover {color:var(--cyan)}
+.menu-btn {
+  display:none;background:none;border:1px solid var(--line);
+  color:white;border-radius:10px;padding:8px 12px;
+}
+.hero {
+  padding:95px 0 75px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse at 50% 0,rgba(0,229,255,.14),transparent 55%),
+    var(--bg);
+}
+.badge {
+  display:inline-block;border:1px solid var(--line);
+  color:var(--cyan);padding:7px 14px;border-radius:100px;
+  font-size:11px;letter-spacing:1.5px;font-weight:bold;
+  margin-bottom:24px;background:rgba(0,229,255,.05);
+}
+.hero h1 {
+  font-size:clamp(38px,8vw,76px);
+  font-weight:900;line-height:1.08;letter-spacing:-2px;
+  margin-bottom:24px;
+}
+.gradient {
+  background:linear-gradient(90deg,#00E5FF,#8BE9FF,#B7A5FF);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p {
+  max-width:700px;margin:0 auto 32px;color:var(--muted);
+  font-size:17px;
+}
+.actions {display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn {
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;padding:13px 22px;border-radius:12px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+  border:1px solid transparent;
+}
+.btn:hover {transform:translateY(-2px)}
+.primary {background:var(--cyan);color:#00131A;box-shadow:0 5px 25px rgba(0,229,255,.15)}
+.secondary {border-color:var(--line);background:rgba(255,255,255,.03)}
+.secondary:hover {border-color:var(--cyan)}
+section {padding:72px 0}
+.section-head {text-align:center;margin-bottom:38px}
+.eyebrow {color:var(--cyan);font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+.section-head h2 {font-size:clamp(27px,5vw,42px);margin:10px 0}
+.section-head p {color:var(--muted);max-width:620px;margin:auto;font-size:14px}
+.grid {display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card {
+  padding:25px;border-radius:var(--radius);
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  transition:transform .2s,border-color .2s;
+}
+.card:hover {transform:translateY(-4px);border-color:rgba(0,229,255,.5)}
+.card-icon {
+  width:46px;height:46px;display:grid;place-items:center;
+  background:rgba(0,229,255,.09);border-radius:13px;
+  font-size:22px;margin-bottom:18px;
+}
+.card h3 {font-size:18px;margin-bottom:9px}
+.card p {font-size:13px;color:var(--muted);margin-bottom:18px}
+.card-link {font-size:12px;font-weight:bold;color:var(--cyan)}
+.about-box {
+  padding:35px;border:1px solid var(--line);
+  background:linear-gradient(135deg,rgba(0,229,255,.07),rgba(139,92,246,.05));
+  border-radius:24px;
+}
+.about-box h2 {font-size:28px;margin-bottom:15px}
+.about-box p {color:var(--muted);font-size:14px;margin-bottom:12px}
+.pillars {display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.pillar {padding:18px;background:rgba(0,0,0,.2);border-radius:14px}
+.pillar b {color:var(--cyan);display:block;margin-bottom:6px;font-size:13px}
+.pillar span {font-size:12px;color:var(--muted)}
+.cta {
+  text-align:center;padding:55px 25px;
+  border-radius:24px;border:1px solid var(--line);
+  background:radial-gradient(ellipse at center,rgba(0,229,255,.09),transparent 75%);
+}
+.cta h2 {font-size:clamp(26px,5vw,42px);margin-bottom:12px}
+.cta p {color:var(--muted);margin:0 auto 25px;max-width:600px}
+footer {border-top:1px solid var(--line);padding:38px 0 100px}
+.footer-grid {display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+footer p {color:var(--muted);font-size:12px;margin-top:10px}
+.footer-links {display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a {color:var(--muted);font-size:12px}
+.footer-links a:hover {color:var(--cyan)}
+.fab {
+  position:fixed;bottom:20px;right:18px;z-index:80;
+  background:#25D366;color:#04140B;
+  padding:13px 17px;border-radius:100px;
+  font-weight:bold;font-size:13px;
+  box-shadow:0 8px 28px rgba(0,0,0,.35);
+}
+.modal {
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  padding:20px;overflow-y:auto;
+}
+.modal-box {
+  max-width:500px;margin:5vh auto;
+  padding:28px;border:1px solid var(--line);
+  background:#111827;border-radius:22px;
+}
+.modal-box h2 {margin-bottom:8px}
+.modal-box p {color:var(--muted);font-size:13px;margin-bottom:20px}
+.field {margin-bottom:15px}
+.field label {display:block;font-size:12px;margin-bottom:7px;color:#D1D5DB}
+.field input,.field textarea {
+  width:100%;padding:12px;border-radius:10px;
+  background:#080D19;border:1px solid #263449;color:white;
+  outline:none;
+}
+.field input:focus,.field textarea:focus {border-color:var(--cyan)}
+.field textarea {resize:vertical;min-height:90px}
+.modal-actions {display:flex;gap:10px;flex-wrap:wrap}
+.close {float:right;background:none;border:0;color:white;font-size:24px;cursor:pointer}
+.notice {font-size:11px;color:var(--muted);margin-top:14px}
+@media(max-width:760px) {
+  .grid {grid-template-columns:1fr}
+  .pillars {grid-template-columns:1fr}
+  .hero {padding:65px 0 55px}
+  .hero p {font-size:15px}
+  .nav-links {
+    display:none;position:absolute;top:70px;left:0;right:0;
+    padding:20px;background:#0A0A1A;border-bottom:1px solid var(--line);
+    flex-direction:column;align-items:flex-start;
+  }
+  .nav-links.open {display:flex}
+  .menu-btn {display:block}
+  .about-box {padding:24px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">RMV <span>APEX GROUP™</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation">☰ Menu</button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container">
+    <div class="badge">✦ INNOVATION • TECHNOLOGY • DIGITAL EXCELLENCE</div>
+    <h1>BUILD BEYOND<br><span class="gradient">THE ORDINARY.</span></h1>
+    <p>Welcome to RMV APEX GROUP™ — your gateway to premium digital solutions, innovative technologies, business resources, and next-generation online experiences.</p>
+    <div class="actions">
+      <a class="btn primary" href="#ecosystem">Explore Our Ecosystem ↗</a>
+      <a class="btn secondary" href="https://rmvapexgroup.blogspot.com/p/rmv-apex-group-bio-link.html" target="_blank" rel="noopener noreferrer">Official BIO LINK</a>
+    </div>
+  </div>
+</section>
+
+<section id="ecosystem">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Our Digital Ecosystem</div>
+      <h2>One Group. <span class="gradient">Infinite Possibilities.</span></h2>
+      <p>Explore our official platforms, digital resources, tools, and business support services.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="card-icon">🌐</div>
+        <h3>RMV APEX GROUP™</h3>
+        <p>Discover our corporate identity, business initiatives, services, and digital vision.</p>
+        <a class="card-link" href="https://rmvapexgroup.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit Corporate Website ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🛍️</div>
+        <h3>APEX GROUP Marketplace™</h3>
+        <p>Explore the marketplace ecosystem, digital offerings, and customer resources.</p>
+        <a class="card-link" href="https://rmvapexgroupmarketplaces.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit Marketplace ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🔗</div>
+        <h3>Official BIO LINK</h3>
+        <p>Your central gateway to official RMV APEX GROUP™ destinations and resources.</p>
+        <a class="card-link" href="https://rmvapexgroup.blogspot.com/p/rmv-apex-group-bio-link.html" target="_blank" rel="noopener noreferrer">Open Official BIO LINK ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Digital Tools</h3>
+        <p>Access digital utilities, interactive resources, and innovative online experiences.</p>
+        <a class="card-link" href="https://rmvapexgroupmarketplaces.blogspot.com/p/digital-tools_0264485824.html" target="_blank" rel="noopener noreferrer">Explore Digital Tools ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🧰</div>
+        <h3>Corporate Tools</h3>
+        <p>Discover productivity resources and useful digital solutions from our group.</p>
+        <a class="card-link" href="https://rmvapexgroup.blogspot.com/p/tools.html" target="_blank" rel="noopener noreferrer">Explore Tools ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🤝</div>
+        <h3>Business Advisory</h3>
+        <p>Connect with our business advisory and support desk for assistance and enquiries.</p>
+        <a class="card-link" href="https://rmvapexgroup.blogspot.com/p/business-advisory-support-desk.html" target="_blank" rel="noopener noreferrer">Visit Support Desk ↗</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-box">
+      <div class="eyebrow">Our Philosophy</div>
+      <h2>Innovation Without Boundaries.</h2>
+      <p>RMV APEX GROUP™ is focused on creating accessible digital experiences, useful online tools, premium technology solutions, and innovative business opportunities.</p>
+      <p>Our vision is to empower individuals, entrepreneurs, and organizations through technology, creativity, and practical digital innovation.</p>
+
+      <div class="pillars">
+        <div class="pillar">
+          <b>KEY 1 — Viral Magnet</b>
+          <span>Public accessibility, engagement, voluntary enquiries, and organic growth.</span>
+        </div>
+        <div class="pillar">
+          <b>KEY 2 — Premium SaaS</b>
+          <span>Professional web applications, scalable architecture, and cloud deployment.</span>
+        </div>
+        <div class="pillar">
+          <b>KEY 3 — Offline Sovereignty</b>
+          <span>Single-file applications, local-first experiences, and offline-friendly design.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="cta">
+      <div class="eyebrow">Let's Build Something Extraordinary</div>
+      <h2>Have an <span class="gradient">Idea?</span></h2>
+      <p>Looking for a custom digital solution, innovative Micro-SaaS, or business technology? Share your requirements with our team.</p>
+      <div class="actions">
+        <button class="btn primary" onclick="openModal()">Request Custom SaaS ✦</button>
+        <a class="btn secondary" href="https://rmvapexgroupmarketplaces.blogspot.com/p/marketplace-enquiries-customer-support.html" target="_blank" rel="noopener noreferrer">Customer Support ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <a href="#" class="logo">RMV <span>APEX GROUP™</span></a>
+      <p>Innovating. Building. Empowering.</p>
+      <p>© <span id="year"></span> RMV APEX GROUP™. All rights reserved.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://rmvapexgroup.blogspot.com/" target="_blank" rel="noopener noreferrer">Corporate</a>
+      <a href="https://rmvapexgroupmarketplaces.blogspot.com/" target="_blank" rel="noopener noreferrer">Marketplace</a>
+      <a href="https://rmvapexgroup.blogspot.com/p/rmv-apex-group-bio-link.html" target="_blank" rel="noopener noreferrer">Official BIO LINK</a>
+      <a href="https://rmvapexgroup.blogspot.com/p/business-advisory-support-desk.html" target="_blank" rel="noopener noreferrer">Support</a>
+    </div>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/?text=Discover%20RMV%20APEX%20GROUP%20%E2%80%94%20Premium%20Digital%20Solutions!" target="_blank" rel="noopener noreferrer">✆ Share on WhatsApp</a>
+
+<div class="modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()" aria-label="Close">&times;</button>
+    <h2 id="modalTitle">Request Custom SaaS</h2>
+    <p>Tell us about your project. Your enquiry will open in your email application for you to review and send.</p>
+
+    <form id="leadForm">
+      <div class="field">
+        <label for="leadName">Full Name *</label>
+        <input id="leadName" name="name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="leadEmail">Email Address *</label>
+        <input id="leadEmail" name="email" type="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="leadWhatsApp">WhatsApp Number (optional)</label>
+        <input id="leadWhatsApp" name="whatsapp" type="tel">
+      </div>
+      <div class="field">
+        <label for="leadRequirement">Project Requirements *</label>
+        <textarea id="leadRequirement" name="requirement" required></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn primary" type="submit">Prepare Enquiry ↗</button>
+        <button class="btn secondary" type="button" onclick="closeModal()">Cancel</button>
+      </div>
+    </form>
+    <div class="notice">Your information is not silently transmitted. You control whether to send the prepared email.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  window.toggleMenu = function(){
+    var menu = document.getElementById("navLinks");
+    if(menu.className.indexOf("open") === -1){
+      menu.className += " open";
+    } else {
+      menu.className = menu.className.replace(" open","");
+    }
+  };
+
+  window.openModal = function(){
+    document.getElementById("leadModal").style.display = "block";
+    document.body.style.overflow = "hidden";
+  };
+
+  window.closeModal = function(){
+    document.getElementById("leadModal").style.display = "none";
+    document.body.style.overflow = "";
+  };
+
+  document.getElementById("leadModal").addEventListener("click",function(event){
+    if(event.target === this){closeModal();}
+  });
+
+  document.getElementById("leadForm").addEventListener("submit",function(event){
+    event.preventDefault();
+
+    var name = document.getElementById("leadName").value;
+    var email = document.getElementById("leadEmail").value;
+    var whatsapp = document.getElementById("leadWhatsApp").value;
+    var requirement = document.getElementById("leadRequirement").value;
+
+    var subject = encodeURIComponent("Custom SaaS Enquiry — RMV APEX GROUP");
+    var body = encodeURIComponent(
+      "CUSTOM SAAS ENQUIRY\n\n"+
+      "Name: "+name+"\n"+
+      "Email: "+email+"\n"+
+      "WhatsApp: "+(whatsapp || "Not provided")+"\n\n"+
+      "Requirements:\n"+requirement+"\n\n"+
+      "Sent through RMV APEX GROUP Digital Headquarters."
+    );
+
+    window.location.href =
+      "mailto:rpsav1974@gmail.com?subject="+subject+"&body="+body;
+  });
+
+  document.addEventListener("keydown",function(event){
+    if(event.key === "Escape"){closeModal();}
+  });
+})();
+</script>
+
+<script type="application/json" id="neural-array-registration">
+{
+  "name":"RMV APEX GROUP Digital Headquarters",
+  "path":"index.html",
+  "icon":"🌐",
+  "version":"1.0.0",
+  "key":"KEY-1|KEY-2|KEY-3",
+  "license":"All rights reserved",
+  "repository":"https://github.com/rmvapexgroupmarketplace/rmv-apex-projects"
+}
+</script>
+
+</body>
+</html>
