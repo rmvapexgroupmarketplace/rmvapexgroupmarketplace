@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rmvapexgroupmarketplace.github.io/rmvapexgroupmarketplace/sitemap-new.xml
