@@ -1,0 +1,18 @@
+
+{
+  "id": "/rmv-apex-projects/",
+  "name": "RMV APEX GROUP",
+  "short_name": "RMV APEX",
+  "description": "RMV APEX GROUP - Premium Digital Solutions, Innovation and Technology.",
+  "start_url": "/rmv-apex-projects/",
+  "scope": "/rmv-apex-projects/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050816",
+  "theme_color": "#00d4ff",
+  "categories": [
+    "business",
+    "productivity",
+    "technology"
+  ]
+}
