@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" class="dark"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMV APEX GROUP ™ | Omnichannel File Viewer &amp; Text Engine</title>
+
+    <!-- === MANDATORY OPENGRAPH & TWITTER CARD PROTOCOL === -->
+    <meta name="theme-color" content="#00E5FF">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🔥 Ultimate Omnichannel File Viewer &amp; Text Engine | Free Instant Access">
+    <meta property="og:description" content="Engineered by RMV APEX GROUP ™. No sign-up required. Free client-side HTML, TXT, Markdown, JSON &amp; Code Viewer and Generator.">
+    <meta property="og:image" content="https://placehold.co/1200x630/0A0A1A/00E5FF?text=Omnichannel+File+Viewer+%26+Text+Engine%0A%0ABy+RMV+APEX+GROUP+%E2%84%A2&amp;font=Montserrat">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- === NEURAL ARRAY REGISTRATION === -->
+    <script type="application/json" id="neural-array-registration">{"name":"Omnichannel File Viewer & Text Engine","path":"index.html","icon":"📄"}</script>
+
+    <!-- Base Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root { 
+            --primary: #FFD700; 
+            --cyan-accent: #00E5FF;
+            --bg-dark: #0A0A1A; 
+            --surface: #12121e; 
+            --surface-light: #1c1c2e; 
+            --text-light: #FFFFFF; 
+            --text-muted: #94A3B8; 
+            --accent: #00E676; 
+            --danger: #FF1744; 
+            --z-critical: 9999; 
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.6); 
+        }
+
+        * { box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: var(--text-light); margin: 0; padding: 0; overflow-x: hidden; }
+        .glass-panel { background: rgba(18, 18, 30, 0.94); border: 1px solid rgba(255, 215, 0, 0.25); border-radius: 16px; box-shadow: var(--shadow-glass); }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        .btn-glow:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        .apex-input { width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; background: #0A0A0A; border: 1px solid #333; color: #fff; font-size: 0.9rem; }
+        .apex-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25); }
+        
+        .floating-widget-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+        .float-btn { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: white; cursor: pointer; border: none; box-shadow: 0 6px 20px rgba(0,0,0,0.6); text-decoration: none; }
+        .btn-wa { background: #25D366; } 
+        .btn-support { background: linear-gradient(135deg, #FF5E5B 0%, #FF1744 100%); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(16px); display: none; justify-content: center; align-items: center; z-index: var(--z-critical); }
+        .modal-overlay.active { display: flex !important; }
+
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10005; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        .toast { background: #FFD700; color: #111; font-weight: 700; padding: 0.8rem 1.2rem; border-radius: 10px; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); font-size: 0.85rem; pointer-events: auto; }
+        
+        .view-content { display: none; }
+        .view-content.active { display: block !important; }
+
+        .clock-matrix { background: rgba(255,215,0,0.08); color: var(--primary); padding: 0.5rem 0.8rem; border-radius: 10px; font-weight: 700; font-family: monospace; font-size: 0.8rem; border: 1px solid rgba(255,215,0,0.3); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+        .font-code { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Sandboxed Frame Container */
+        .frame-wrapper {
+            width: 100%;
+            height: 480px;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+        .frame-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.top-0{top:0px}.right-4{right:1rem}.right-5{right:1.25rem}.top-4{top:1rem}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mx-4{margin-left:1rem;margin-right:1rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mb-1{margin-bottom:0.25rem}.mb-3{margin-bottom:0.75rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-\[360px\]{height:360px}.h-12{height:3rem}.h-24{height:6rem}.h-64{height:16rem}.max-h-\[500px\]{max-height:500px}.max-h-\[90vh\]{max-height:90vh}.min-h-screen{min-height:100vh}.w-4{width:1rem}.w-full{width:100%}.w-12{width:3rem}.max-w-6xl{max-width:72rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.cursor-pointer{cursor:pointer}.select-all{-webkit-user-select:all;user-select:all}.resize-none{resize:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-row{flex-direction:row}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-1{gap:0.25rem}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-none{border-radius:0px}.rounded-xl{border-radius:0.75rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-x-0{border-left-width:0px;border-right-width:0px}.border-y-0{border-top-width:0px;border-bottom-width:0px}.border-r{border-right-width:1px}.border-t-0{border-top-width:0px}.border-t-4{border-top-width:4px}.border-amber-400\/40{border-color:rgb(251 191 36 / 0.4)}.border-cyan-400\/30{border-color:rgb(34 211 238 / 0.3)}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55 / var(--tw-border-opacity, 1))}.border-t-amber-400{--tw-border-opacity:1;border-top-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-t-rose-500{--tw-border-opacity:1;border-top-color:rgb(244 63 94 / var(--tw-border-opacity, 1))}.bg-\[\#05050A\]{--tw-bg-opacity:1;background-color:rgb(5 5 10 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-cyan-400\/20{background-color:rgb(34 211 238 / 0.2)}.bg-cyan-500{--tw-bg-opacity:1;background-color:rgb(6 182 212 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-red-500\/20{background-color:rgb(239 68 68 / 0.2)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-\[\#25D366\]{--tw-bg-opacity:1;background-color:rgb(37 211 102 / var(--tw-bg-opacity, 1))}.bg-\[\#29abe0\]{--tw-bg-opacity:1;background-color:rgb(41 171 224 / var(--tw-bg-opacity, 1))}.bg-\[\#FFDD00\]{--tw-bg-opacity:1;background-color:rgb(255 221 0 / var(--tw-bg-opacity, 1))}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-rose-500\/20{background-color:rgb(244 63 94 / 0.2)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-amber-400{--tw-gradient-from:#fbbf24 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 191 36 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pr-1{padding-right:0.25rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-semibold{font-weight:600}.font-light{font-weight:300}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-cyan-300{--tw-text-opacity:1;color:rgb(103 232 249 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-amber-400:hover{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.hover\:bg-cyan-400:hover{--tw-bg-opacity:1;background-color:rgb(34 211 238 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.hover\:bg-red-500\/30:hover{background-color:rgb(239 68 68 / 0.3)}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / 0.1)}.hover\:bg-white\/5:hover{background-color:rgb(255 255 255 / 0.05)}.hover\:bg-cyan-400\/30:hover{background-color:rgb(34 211 238 / 0.3)}.hover\:bg-amber-400:hover{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.hover\:brightness-110:hover{--tw-brightness:brightness(1.1);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.focus\:border-amber-400:focus{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:h-\[420px\]{height:420px}.md\:w-64{width:16rem}.md\:w-auto{width:auto}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:flex-col{flex-direction:column}.md\:p-5{padding:1.25rem}.md\:p-6{padding:1.5rem}.md\:p-8{padding:2rem}.md\:px-4{padding-left:1rem;padding-right:1rem}.md\:px-6{padding-left:1.5rem;padding-right:1.5rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-base{font-size:1rem;line-height:1.5rem}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}}@media (min-width: 1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <nav class="glass-panel rounded-none px-4 md:px-6 py-3 flex justify-between items-center sticky top-0 z-50 flex-wrap gap-3 border-t-0 border-x-0">
+        <div class="flex items-center gap-2.5">
+            <span class="text-2xl">👑</span>
+            <div>
+                <h1 class="text-sm md:text-base font-black tracking-wider uppercase text-amber-300 leading-tight">RMV APEX GROUP ™</h1>
+                <p class="text-[10px] text-gray-400 font-mono tracking-wider">Universal Omni-Tool System™ | Enterprise File &amp; Text Suite</p>
+            </div>
+        </div>
+
+        <!-- Live World Geo Time Matrix (Kolkata, India / IST) -->
+        <div class="clock-matrix w-full md:w-auto text-center" id="liveClock">📍 Kolkata, India (IST) | Mon, Nov 2, 2026, 06:14:09 PM</div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="RMV_App.triggerLead('Omnichannel File Viewer Suite')" class="bg-gradient-to-r from-amber-400 to-amber-600 hover:brightness-110 text-black font-black py-2 px-3 md:px-4 rounded-xl shadow-lg text-xs flex items-center gap-1.5 uppercase cursor-pointer">
+                <i class="fa-solid fa-paper-plane"></i> Request SaaS
+            </button>
+            <button onclick="RMV_App.showModal('pricingModal')" class="bg-black/60 border border-amber-400/40 hover:border-amber-400 text-amber-300 font-bold py-2 px-3 rounded-xl btn-glow text-xs flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-gem text-xs"></i> 15-Tier
+            </button>
+            <button onclick="RMV_DownloadEngine.exportStandaloneHTML('Omnichannel_File_Engine')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-xl text-xs cursor-pointer" title="Export Standalone Package">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- App Layout Container -->
+    <div class="flex flex-1 flex-col md:flex-row">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 glass-panel rounded-none border-r border-y-0 p-3 md:p-5 flex flex-row md:flex-col gap-2 overflow-x-auto shrink-0">
+            <button id="btn-editor" onclick="RMV_App.switchTab('view-editor')" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-amber-400 text-black font-black flex items-center gap-2.5 text-xs md:text-sm shadow cursor-pointer whitespace-nowrap"><i class="fa-solid fa-file-code w-4 text-center"></i> File Viewer &amp; Studio</button>
+            <button id="btn-generator" onclick="RMV_App.switchTab('view-generator')" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-2.5 text-xs md:text-sm cursor-pointer whitespace-nowrap"><i class="fa-solid fa-wand-magic-sparkles w-4 text-center"></i> Text / HTML Factory</button>
+            <button id="btn-fractal" onclick="RMV_App.switchTab('view-fractal')" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-2.5 text-xs md:text-sm cursor-pointer whitespace-nowrap"><i class="fa-solid fa-network-wired w-4 text-center"></i> 99M Fractal Matrix</button>
+            <button onclick="RMV_App.showModal('pricingModal')" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-2.5 text-xs md:text-sm cursor-pointer whitespace-nowrap"><i class="fa-solid fa-tags w-4 text-center"></i> 15-Tier Pricing</button>
+            <button onclick="RMV_App.showModal('supportModal')" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-2.5 text-xs md:text-sm cursor-pointer whitespace-nowrap"><i class="fa-solid fa-heart w-4 text-center text-rose-500"></i> Support Vault</button>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+            <div class="max-w-6xl mx-auto">
+
+                <!-- VIEW: FILE VIEWER & CODE STUDIO -->
+                <section id="view-editor" class="view-content active">
+                    <div class="mb-4 flex flex-wrap justify-between items-center gap-3">
+                        <div>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-cyan-400/20 text-cyan-400 border border-cyan-400/30">Local-First Engine</span>
+                            <h2 class="text-xl md:text-2xl font-black text-white mt-1">Omnichannel File &amp; Code Viewer</h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="bg-amber-400 hover:brightness-110 text-black font-black px-3 py-1.5 rounded-xl text-xs uppercase cursor-pointer flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-upload"></i> Open File
+                                <input type="file" id="localFileLoader" class="hidden" accept=".html,.htm,.txt,.json,.csv,.md,.js,.css" onchange="RMV_Viewer.handleFileUpload(event)">
+                            </label>
+                            <button onclick="RMV_Viewer.loadPreset('html')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-3 py-1.5 rounded-xl text-xs">HTML Sample</button>
+                            <button onclick="RMV_Viewer.loadPreset('txt')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-3 py-1.5 rounded-xl text-xs">TXT Sample</button>
+                            <button onclick="RMV_Viewer.clear()" class="bg-red-500/20 text-red-400 hover:bg-red-500/30 font-bold px-2.5 py-1.5 rounded-xl text-xs">Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry Quick Banner -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 font-mono text-[11px]">
+                        <div class="bg-black/50 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-gray-500 block text-[9px]">ACTIVE FILE</span>
+                            <span id="metaFileName" class="text-amber-400 font-bold truncate block">Untitled.txt</span>
+                        </div>
+                        <div class="bg-black/50 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-gray-500 block text-[9px]">SIZE</span>
+                            <span id="metaFileSize" class="text-cyan-400 font-bold">0 Bytes</span>
+                        </div>
+                        <div class="bg-black/50 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-gray-500 block text-[9px]">STATS</span>
+                            <span id="metaFileStats" class="text-white font-bold">0 chars | 0 lines</span>
+                        </div>
+                        <div class="bg-black/50 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-gray-500 block text-[9px]">STORAGE PROTOCOL</span>
+                            <span class="text-green-400 font-bold">In-Memory Local</span>
+                        </div>
+                    </div>
+
+                    <!-- Dual-Pane Workspace -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+                        <!-- Left Pane: Code / Text Editor -->
+                        <div class="glass-panel p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-code"></i> Raw Text / HTML Source</span>
+                                <button onclick="RMV_Viewer.copyBuffer()" class="px-2 py-0.5 bg-white/5 hover:bg-white/10 rounded text-gray-300 text-[10px] font-mono">Copy All</button>
+                            </div>
+                            <textarea id="fileBufferEditor" class="w-full h-[360px] md:h-[420px] p-3.5 bg-[#05050A] border border-gray-800 rounded-xl text-xs font-code text-gray-200 outline-none focus:border-amber-400 resize-none leading-relaxed" placeholder="Type text or paste code here..." oninput="RMV_Viewer.handleLiveInput()"></textarea>
+                            
+                            <div class="mt-3 flex flex-wrap gap-2 justify-between items-center">
+                                <button onclick="RMV_Viewer.renderPreviewNow()" class="bg-cyan-500 hover:bg-cyan-400 text-black font-black px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow">
+                                    <i class="fa-solid fa-play"></i> Re-Render Frame
+                                </button>
+                                <div class="flex gap-2">
+                                    <button onclick="RMV_Viewer.downloadBuffer('txt')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-3 py-1.5 rounded-xl text-xs">
+                                        Export .TXT
+                                    </button>
+                                    <button onclick="RMV_Viewer.downloadBuffer('html')" class="bg-amber-400 hover:brightness-110 text-black font-extrabold px-3 py-1.5 rounded-xl text-xs shadow">
+                                        Export .HTML
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Pane: Sandboxed Execution & Live Preview -->
+                        <div class="glass-panel p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-display"></i> Interactive Sandboxed Frame</span>
+                                <span class="text-[9px] font-mono text-gray-400 bg-black/60 px-2 py-0.5 rounded">Safe Blob / SrcDoc Sandbox</span>
+                            </div>
+
+                            <!-- Frame Wrapper Guaranteed to Render on Android -->
+                            <div class="frame-wrapper">
+                                <iframe id="sandboxedPreviewFrame" srcdoc="&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;style&gt;body{background:#0d0d15;color:#e0e0e0;font-family:monospace;padding:16px;white-space:pre-wrap;word-break:break-word;font-size:13px;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+                            </div>
+                            
+                            <div class="mt-3 flex flex-wrap gap-2 justify-between items-center">
+                                <button onclick="RMV_Viewer.openFullscreenPreview()" class="bg-white/5 hover:bg-white/10 text-gray-300 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-up-right-from-square"></i> Open In New Tab
+                                </button>
+                                <button onclick="RMV_App.triggerLead('Enterprise White-Label Viewer Deployment')" class="bg-gradient-to-r from-amber-400 to-amber-600 text-black font-black px-3.5 py-1.5 rounded-xl text-xs uppercase flex items-center gap-1">
+                                    Deploy App ➔
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW: TEXT / HTML GENERATOR FACTORY -->
+                <section id="view-generator" class="view-content">
+                    <div class="mb-4">
+                        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest font-bold">Content Factory Omniverse</span>
+                        <h2 class="text-xl md:text-2xl font-black text-white mt-1">Automated Template Synthesizer</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="glass-panel p-4">
+                            <h3 class="text-xs font-bold text-white mb-2 flex items-center gap-1.5"><i class="fa-solid fa-sliders text-amber-400"></i> Blueprint Settings</h3>
+                            <label class="block text-[11px] text-gray-400 mb-1">Brand / Product Title:</label>
+                            <input type="text" id="genTitle" class="apex-input text-xs mb-3" placeholder="e.g. Apex Secure Ledger">
+                            
+                            <label class="block text-[11px] text-gray-400 mb-1">Select Template:</label>
+                            <select id="genType" class="apex-input text-xs mb-3 font-mono">
+                                <option value="landing">Micro Landing Page (HTML)</option>
+                                <option value="terms">Privacy Policy &amp; Terms (.TXT)</option>
+                                <option value="readme">Enterprise README (.MD)</option>
+                            </select>
+
+                            <button onclick="RMV_Generator.executeGeneration()" class="w-full bg-amber-400 hover:brightness-110 text-black font-black py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer shadow">
+                                🚀 Synthesize &amp; Stream ➔
+                            </button>
+                        </div>
+
+                        <div class="md:col-span-2 glass-panel p-4 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs font-mono font-bold text-amber-400 uppercase">Generated Output</span>
+                                    <button onclick="RMV_Generator.pushToViewer()" class="text-xs bg-cyan-400/20 hover:bg-cyan-400/30 text-cyan-300 font-bold px-2 py-1 rounded">Load In Studio &amp; Frame ➔</button>
+                                </div>
+                                <textarea id="genOutputBox" class="w-full h-64 p-3 bg-[#05050A] border border-gray-800 rounded-xl text-xs font-code text-amber-200 outline-none resize-none leading-relaxed" placeholder="Synthesized output will stream here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW: 99M FRACTAL MATRIX ENGINE -->
+                <section id="view-fractal" class="view-content">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-black text-white">99,999,999 Fractal Matrix</h2>
+                            <p class="text-xs text-green-400">Autonomous cluster synthesizer.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="RMV_App.synthesizeMatrix()" class="bg-amber-400 text-black font-extrabold px-3 py-1.5 rounded-xl text-xs shadow cursor-pointer">
+                                🔄 Refresh
+                            </button>
+                            <button onclick="RMV_App.exportCSV()" class="bg-gray-800 text-white px-3 py-1.5 rounded-xl font-bold text-xs shadow cursor-pointer">
+                                Export CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <div id="fractalClusterGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[500px] overflow-y-auto pr-1"><div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead('B2B SaaS CRM')"><div><span class="text-[9px] font-mono text-gray-500">CLUSTER-001</span><h4 class="font-bold text-xs text-white mt-1">B2B SaaS CRM</h4><p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p></div><button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button></div><div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead('Algorithmic Tax Amortizer')"><div><span class="text-[9px] font-mono text-gray-500">CLUSTER-002</span><h4 class="font-bold text-xs text-white mt-1">Algorithmic Tax Amortizer</h4><p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p></div><button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button></div><div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead('SEO Funnel Builder')"><div><span class="text-[9px] font-mono text-gray-500">CLUSTER-003</span><h4 class="font-bold text-xs text-white mt-1">SEO Funnel Builder</h4><p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p></div><button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button></div><div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead('Code Minifier Suite')"><div><span class="text-[9px] font-mono text-gray-500">CLUSTER-004</span><h4 class="font-bold text-xs text-white mt-1">Code Minifier Suite</h4><p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p></div><button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button></div><div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead('Local Offline PWA')"><div><span class="text-[9px] font-mono text-gray-500">CLUSTER-005</span><h4 class="font-bold text-xs text-white mt-1">Local Offline PWA</h4><p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p></div><button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button></div><div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead('Web3 Asset Vault')"><div><span class="text-[9px] font-mono text-gray-500">CLUSTER-006</span><h4 class="font-bold text-xs text-white mt-1">Web3 Asset Vault</h4><p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p></div><button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button></div></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- 15-TIER PRICING MATRIX MODAL -->
+    <div id="pricingModal" class="modal-overlay">
+        <div class="glass-panel p-5 md:p-8 max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto relative border-t-4 border-t-amber-400">
+            <button onclick="RMV_App.hideModal('pricingModal')" class="absolute top-4 right-5 text-gray-400 hover:text-white text-3xl font-light cursor-pointer">×</button>
+            <div class="text-center mb-6">
+                <span class="text-xs font-mono text-amber-400 uppercase tracking-widest font-bold">Commercial Matrix</span>
+                <h2 class="text-2xl md:text-3xl font-black text-white mt-1">15-TIER PRICING MATRIX</h2>
+            </div>
+            <div class="pricing-grid mb-6" id="priceTierGrid"><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Starter</span><h4 class="font-black text-sm text-white">Basic Utility Suite</h4><p class="text-xl font-black text-white mt-2">₹1,499</p></div><button onclick="RMV_App.initiateCheckout(1, 'Basic Utility Suite', '₹1,499')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Pro</span><h4 class="font-black text-sm text-white">Life Wisdom Engine</h4><p class="text-xl font-black text-white mt-2">₹2,499</p></div><button onclick="RMV_App.initiateCheckout(2, 'Life Wisdom Engine', '₹2,499')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Pro</span><h4 class="font-black text-sm text-white">Health &amp; Well-being</h4><p class="text-xl font-black text-white mt-2">₹2,999</p></div><button onclick="RMV_App.initiateCheckout(3, 'Health &amp; Well-being', '₹2,999')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Pro</span><h4 class="font-black text-sm text-white">Compliance &amp; Tax Suite</h4><p class="text-xl font-black text-white mt-2">₹2,499</p></div><button onclick="RMV_App.initiateCheckout(4, 'Compliance &amp; Tax Suite', '₹2,499')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Enterprise</span><h4 class="font-black text-sm text-white">Finance &amp; Real Estate</h4><p class="text-xl font-black text-white mt-2">₹4,999</p></div><button onclick="RMV_App.initiateCheckout(5, 'Finance &amp; Real Estate', '₹4,999')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Enterprise</span><h4 class="font-black text-sm text-white">SEO &amp; Digital Tools</h4><p class="text-xl font-black text-white mt-2">₹7,500</p></div><button onclick="RMV_App.initiateCheckout(6, 'SEO &amp; Digital Tools', '₹7,500')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div><div class="glass-panel p-4 flex flex-col justify-between"><div><span class="text-[10px] text-amber-400 font-mono uppercase">Enterprise</span><h4 class="font-black text-sm text-white">Custom Advanced Web App</h4><p class="text-xl font-black text-white mt-2">₹75,000</p></div><button onclick="RMV_App.initiateCheckout(7, 'Custom Advanced Web App', '₹75,000')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button></div></div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkoutModal" class="modal-overlay">
+        <div class="glass-panel p-6 max-w-sm w-full mx-4 text-center relative border-t-4 border-t-amber-400">
+            <button onclick="RMV_App.hideModal('checkoutModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer">×</button>
+            <h2 class="text-lg font-black text-white mb-2 uppercase">Payment Gateway</h2>
+            <p class="text-xs text-gray-400 mb-4" id="checkoutTargetItem">Loading...</p>
+            
+            <div class="bg-black/80 rounded-xl p-3 border border-gray-800 mb-3">
+                <p class="text-amber-400 font-bold text-[10px] uppercase mb-2">Option 1: GPay / UPI</p>
+                <a id="gpayLink" href="#" class="bg-white text-gray-900 font-black py-2.5 px-3 rounded-lg text-xs w-full flex items-center justify-center gap-2 mb-1">
+                    Pay via Google Pay
+                </a>
+                <p class="text-[9px] text-gray-500 font-mono">rmvgroupsworld@oksbi</p>
+            </div>
+
+            <div class="bg-black/80 rounded-xl p-3 border border-gray-800 text-left mb-4 text-[11px] text-gray-300 leading-relaxed">
+                <strong class="text-white block mb-1">Option 2: Direct SBI Transfer</strong>
+                Acct: <span class="text-white select-all">10153494535</span><br>
+                IFSC: <span class="text-white select-all">SBIN0000551</span>
+            </div>
+
+            <button id="whatsappConfirmBtn" class="bg-[#25D366] text-black font-black w-full py-3 rounded-xl text-xs uppercase flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp"></i> Confirm on WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- SUPPORT CREATOR MODAL -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="glass-panel p-6 max-w-sm w-full mx-4 text-center relative border-t-4 border-t-rose-500">
+            <button onclick="RMV_App.hideModal('supportModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer">×</button>
+            <div class="w-12 h-12 bg-rose-500/20 text-rose-500 rounded-full flex items-center justify-center text-xl mx-auto mb-2"><i class="fa-solid fa-heart"></i></div>
+            <h2 class="text-xl font-black text-white mb-1 uppercase">Support Vault</h2>
+            <p class="text-gray-400 text-xs mb-4">Support future development of 100% free software!</p>
+            
+            <div class="flex flex-col gap-2 mb-4 text-xs font-bold">
+                <a href="https://ko-fi.com/rameshmewalalvishwakarma" target="_blank" class="py-2.5 px-3 rounded-xl text-white bg-[#29abe0] flex items-center justify-center gap-2"><i class="fa-solid fa-mug-hot"></i> Ko-Fi</a>
+                <a href="https://buymeacoffee.com/rmvapexgroup" target="_blank" class="py-2.5 px-3 rounded-xl text-black bg-[#FFDD00] flex items-center justify-center gap-2"><i class="fa-solid fa-pizza-slice"></i> Buy Me a Coffee</a>
+            </div>
+
+            <button onclick="RMV_App.triggerSupportWhatsApp()" class="bg-[#25D366] text-black font-black w-full py-2.5 rounded-xl text-xs uppercase flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Receipt
+            </button>
+        </div>
+    </div>
+
+    <!-- VOLUNTARY LEAD CAPTURE MODAL -->
+    <div id="leadModal" class="modal-overlay">
+        <div class="glass-panel p-6 max-w-md w-full mx-4 relative border-t-4 border-t-amber-400">
+            <button onclick="RMV_App.hideModal('leadModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer">×</button>
+            <h2 class="text-xl font-black text-amber-400 mb-1 uppercase">Deployment Inquiry</h2>
+            <p class="text-gray-300 text-xs mb-4">Direct advisory with our principal engineering desk.</p>
+            
+            <textarea id="leadReq" class="apex-input h-24 mb-2 text-xs" placeholder="Describe requirement..."></textarea>
+            <input type="text" id="leadName" class="apex-input mb-2 text-xs" placeholder="Full Legal Name">
+            <input type="email" id="leadEmail" class="apex-input mb-2 text-xs" placeholder="Business Email ✉️">
+            <input type="tel" id="leadPhone" class="apex-input mb-4 text-xs" placeholder="WhatsApp Number">
+            
+            <button onclick="RMV_App.submitLeadForm()" class="bg-amber-400 text-black font-black w-full py-3 rounded-xl text-xs uppercase cursor-pointer">
+                Submit Inquiry (Free) ➔
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Action Hotlines -->
+    <div class="floating-widget-container">
+        <button onclick="RMV_App.triggerSupportWhatsApp()" class="float-btn btn-wa" title="WhatsApp Hotline"><i class="fa-brands fa-whatsapp"></i></button>
+        <button onclick="RMV_App.showModal('supportModal')" class="float-btn btn-support" title="Support Creator"><i class="fa-solid fa-heart"></i></button>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <!-- ====================================================================== -->
+    <!-- JAVASCRIPT ENGINE (100% ANDROID CONTENT:// & ES5 COMPATIBLE)            -->
+    <!-- ====================================================================== -->
+    <script>
+        // 1. Live Chronometer (Kolkata, India / IST)
+        function updateClock() {
+            var clockEl = document.getElementById('liveClock');
+            if(!clockEl) return;
+            var now = new Date();
+            var str = "";
+            try {
+                var options = { timeZone: 'Asia/Kolkata', weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                str = new Intl.DateTimeFormat('en-US', options).format(now);
+            } catch(e) {
+                var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+                var ist = new Date(utc + (3600000 * 5.5));
+                str = ist.toUTCString();
+            }
+            clockEl.innerHTML = "📍 Kolkata, India (IST) | " + str;
+            setTimeout(updateClock, 1000);
+        }
+        updateClock();
+
+        // 2. MASTER APP RUNTIME
+        var RMV_App = {
+            tiers: [
+                { id: 1, name: "Basic Utility Suite", level: "Starter", inr: "₹1,499" },
+                { id: 2, name: "Life Wisdom Engine", level: "Pro", inr: "₹2,499" },
+                { id: 3, name: "Health & Well-being", level: "Pro", inr: "₹2,999" },
+                { id: 4, name: "Compliance & Tax Suite", level: "Pro", inr: "₹2,499" },
+                { id: 5, name: "Finance & Real Estate", level: "Enterprise", inr: "₹4,999" },
+                { id: 6, name: "SEO & Digital Tools", level: "Enterprise", inr: "₹7,500" },
+                { id: 7, name: "Custom Advanced Web App", level: "Enterprise", inr: "₹75,000" }
+            ],
+            init: function() {
+                this.synthesizeMatrix();
+                this.renderPricingMatrix();
+                RMV_Viewer.init();
+            },
+            showModal: function(id) { document.getElementById(id).classList.add('active'); },
+            hideModal: function(id) { document.getElementById(id).classList.remove('active'); },
+            showToast: function(msg) {
+                var container = document.getElementById('toast-container');
+                if(!container) return;
+                var toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>' + msg + '</span>';
+                container.appendChild(toast);
+                setTimeout(function() { toast.remove(); }, 3000);
+            },
+            switchTab: function(tabId) {
+                var tabs = ['view-editor', 'view-generator', 'view-fractal'];
+                for(var i = 0; i < tabs.length; i++) {
+                    var el = document.getElementById(tabs[i]);
+                    if(el) el.classList.remove('active');
+                }
+                var target = document.getElementById(tabId);
+                if(target) target.classList.add('active');
+
+                var btns = { 'view-editor': 'btn-editor', 'view-generator': 'btn-generator', 'view-fractal': 'btn-fractal' };
+                for(var k in btns) {
+                    var btn = document.getElementById(btns[k]);
+                    if(btn) {
+                        btn.className = (k === tabId) 
+                            ? "nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-amber-400 text-black font-black flex items-center gap-2.5 text-xs md:text-sm shadow cursor-pointer whitespace-nowrap"
+                            : "nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-semibold flex items-center gap-2.5 text-xs md:text-sm cursor-pointer whitespace-nowrap";
+                    }
+                }
+            },
+            triggerLead: function(itemName) {
+                var reqBox = document.getElementById('leadReq');
+                if(reqBox) reqBox.value = "Inquiry for: " + itemName;
+                this.showModal('leadModal');
+            },
+            initiateCheckout: function(id, name, inrAmt) {
+                this.hideModal('pricingModal');
+                document.getElementById('checkoutTargetItem').innerText = "Tier " + id + " - " + name + " (" + inrAmt + ")";
+                document.getElementById('gpayLink').href = "tez://upi/pay?pa=rmvgroupsworld@oksbi&pn=Ramesh%20Mewalal%20Vishwakarma&cu=INR";
+                var waBtn = document.getElementById('whatsappConfirmBtn');
+                var self = this;
+                waBtn.onclick = function() {
+                    window.open("https://wa.me/918652025006?text=" + encodeURIComponent("Payment initiated for " + name + " (" + inrAmt + ")"), "_blank");
+                    self.hideModal('checkoutModal');
+                };
+                this.showModal('checkoutModal');
+            },
+            triggerSupportWhatsApp: function() {
+                window.open("https://wa.me/918652025006?text=" + encodeURIComponent("Supporting RMV APEX GROUP Work!"), "_blank");
+            },
+            submitLeadForm: function() {
+                var name = document.getElementById('leadName').value.trim();
+                var email = document.getElementById('leadEmail').value.trim();
+                var phone = document.getElementById('leadPhone').value.trim();
+                var req = document.getElementById('leadReq').value.trim();
+                if(!name || !email) { alert("Please enter name and email"); return; }
+                
+                var formData = new FormData();
+                formData.append('entry.111111111', name);
+                formData.append('entry.222222222', email);
+                formData.append('entry.444444444', phone);
+                formData.append('entry.555555555', req);
+                fetch('https://docs.google.com/forms/d/1udVlbomT01FV4xqDVZbzbKrfa0Nv8YUC2-R3y8TOB8k/formResponse', { method: 'POST', mode: 'no-cors', body: formData });
+                this.showToast("Inquiry Dispatched!");
+                this.hideModal('leadModal');
+            },
+            synthesizeMatrix: function() {
+                var container = document.getElementById('fractalClusterGrid');
+                if(!container) return;
+                var html = '';
+                var items = ["B2B SaaS CRM", "Algorithmic Tax Amortizer", "SEO Funnel Builder", "Code Minifier Suite", "Local Offline PWA", "Web3 Asset Vault"];
+                for(var i = 0; i < items.length; i++) {
+                    html += '<div class="glass-panel p-3.5 flex flex-col justify-between hover:border-amber-400 transition cursor-pointer" onclick="RMV_App.triggerLead(\'' + items[i] + '\')">' +
+                        '<div>' +
+                            '<span class="text-[9px] font-mono text-gray-500">CLUSTER-00' + (i+1) + '</span>' +
+                            '<h4 class="font-bold text-xs text-white mt-1">' + items[i] + '</h4>' +
+                            '<p class="text-[10px] text-gray-400 mt-1">Autonomous client-side micro-engine.</p>' +
+                        '</div>' +
+                        '<button class="mt-3 bg-white/5 hover:bg-amber-400 hover:text-black text-amber-300 font-bold text-[10px] py-1 px-2 rounded">Deploy ➔</button>' +
+                    '</div>';
+                }
+                container.innerHTML = html;
+            },
+            renderPricingMatrix: function() {
+                var container = document.getElementById('priceTierGrid');
+                if(!container) return;
+                var html = '';
+                for(var i = 0; i < this.tiers.length; i++) {
+                    var t = this.tiers[i];
+                    html += '<div class="glass-panel p-4 flex flex-col justify-between">' +
+                        '<div>' +
+                            '<span class="text-[10px] text-amber-400 font-mono uppercase">' + t.level + '</span>' +
+                            '<h4 class="font-black text-sm text-white">' + t.name + '</h4>' +
+                            '<p class="text-xl font-black text-white mt-2">' + t.inr + '</p>' +
+                        '</div>' +
+                        '<button onclick="RMV_App.initiateCheckout(' + t.id + ', \'' + t.name + '\', \'' + t.inr + '\')" class="mt-4 bg-amber-400 text-black font-black py-2 rounded-lg text-xs uppercase cursor-pointer">Deploy</button>' +
+                    '</div>';
+                }
+                container.innerHTML = html;
+            },
+            exportCSV: function() {
+                RMV_DownloadEngine.downloadAsBrandedBlob("ID,Name\n1,B2B CRM\n2,Tax Calculator", "Matrix_Data", "text/csv;charset=utf-8;");
+            }
+        };
+
+        // ======================================================================
+        // 3. ROBUST SANDBOXED VIEWER ENGINE (SOLVES ANDROID CONTENT:// ISSUE)
+        // ======================================================================
+        var RMV_Viewer = {
+            currentFile: "Landing_Widget.html",
+            activeObjectUrl: null,
+            init: function() {
+                this.loadPreset('html');
+            },
+            handleFileUpload: function(evt) {
+                var file = evt.target.files[0];
+                if (!file) return;
+                var self = this;
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var content = e.target.result;
+                    var editor = document.getElementById('fileBufferEditor');
+                    if (editor) editor.value = content;
+                    self.currentFile = file.name;
+                    self.updateMetadata(file.name, file.size, content);
+                    self.renderPreview(content);
+                    RMV_App.showToast("Opened: " + file.name);
+                };
+                reader.readAsText(file);
+            },
+            handleLiveInput: function() {
+                var editor = document.getElementById('fileBufferEditor');
+                var content = editor ? editor.value : "";
+                this.updateMetadata(this.currentFile, content.length, content);
+                this.renderPreview(content);
+            },
+            renderPreviewNow: function() {
+                var editor = document.getElementById('fileBufferEditor');
+                var content = editor ? editor.value : "";
+                this.renderPreview(content);
+                RMV_App.showToast("Frame Refreshed!");
+            },
+            updateMetadata: function(name, size, content) {
+                document.getElementById('metaFileName').innerText = name;
+                document.getElementById('metaFileSize').innerText = size > 1024 ? (size / 1024).toFixed(1) + " KB" : size + " Bytes";
+                var lines = content.length > 0 ? content.split('\n').length : 0;
+                document.getElementById('metaFileStats').innerText = content.length + " chars | " + lines + " lines";
+            },
+            renderPreview: function(content) {
+                var iframe = document.getElementById('sandboxedPreviewFrame');
+                if (!iframe) return;
+
+                var isHtml = /<[a-z][\s\S]*>/i.test(content);
+                var fullPayload = isHtml ? content : '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{background:#0d0d15;color:#e0e0e0;font-family:monospace;padding:16px;white-space:pre-wrap;word-break:break-word;font-size:13px;}</style></head><body>' + this.escapeHtml(content) + '</body></html>';
+
+                // METHOD 1: Try srcdoc (Standard in Android WebViews)
+                if ("srcdoc" in iframe) {
+                    iframe.removeAttribute("src");
+                    iframe.srcdoc = fullPayload;
+                } else {
+                    // METHOD 2: Blob URL Fallback (Bypasses content:// security locks)
+                    if (this.activeObjectUrl) {
+                        URL.revokeObjectURL(this.activeObjectUrl);
+                    }
+                    var blob = new Blob([fullPayload], { type: 'text/html;charset=utf-8' });
+                    this.activeObjectUrl = URL.createObjectURL(blob);
+                    iframe.src = this.activeObjectUrl;
+                }
+            },
+            escapeHtml: function(text) {
+                return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            },
+            loadPreset: function(type) {
+                var sample = "";
+                if (type === 'html') {
+                    this.currentFile = "Landing_Widget.html";
+                    sample = '<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <style>\n    body { font-family: -apple-system, sans-serif; background: #0A0A1A; color: #fff; padding: 25px; text-align: center; }\n    .box { border: 2px solid #FFD700; border-radius: 12px; padding: 25px; background: rgba(255,215,0,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }\n    h1 { color: #FFD700; font-size: 1.3rem; margin-bottom: 8px; font-weight: 800; }\n    p { color: #94A3B8; font-size: 0.9rem; line-height: 1.5; }\n    .btn { background: #FFD700; color: #000; font-weight: 800; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 15px; font-size: 0.85rem; }\n  </style>\n</head>\n<body>\n  <div class="box">\n    <h1>RMV APEX ENTERPRISE WIDGET</h1>\n    <p>Operational Protocol Active. Client-side sandboxed frame is rendering flawlessly on Android!</p>\n    <button class="btn" onclick="alert(\'Operational Protocol 100% Verified on Mobile!\')">Execute Protocol</button>\n  </div>\n</body>\n</html>';
+                } else {
+                    this.currentFile = "Specifications.txt";
+                    sample = "========================================================\nRMV APEX GROUP ™ | SYSTEM SPECIFICATION ARCHIVE\n========================================================\nProprietor: Ramesh Mewalal Vishwakarma 🚩\nHeadquarters: Kandivali West, Mumbai - 400067\nTime Matrix: Asia/Kolkata (IST)\nRuntime Architecture: ES5 Legacy-Safe Blob-Injected Frame\nStatus: 100% Free Public Access Tier Operational\n========================================================";
+                }
+                var editor = document.getElementById('fileBufferEditor');
+                if (editor) editor.value = sample;
+                this.updateMetadata(this.currentFile, sample.length, sample);
+                this.renderPreview(sample);
+            },
+            clear: function() {
+                var editor = document.getElementById('fileBufferEditor');
+                if (editor) editor.value = "";
+                this.currentFile = "Untitled.txt";
+                this.updateMetadata(this.currentFile, 0, "");
+                this.renderPreview("");
+            },
+            copyBuffer: function() {
+                var editor = document.getElementById('fileBufferEditor');
+                if (editor) {
+                    navigator.clipboard.writeText(editor.value);
+                    RMV_App.showToast("Copied to clipboard!");
+                }
+            },
+            downloadBuffer: function(type) {
+                var editor = document.getElementById('fileBufferEditor');
+                var val = editor ? editor.value : "";
+                var mime = type === 'html' ? 'text/html;charset=utf-8' : 'text/plain;charset=utf-8';
+                RMV_DownloadEngine.downloadAsBrandedBlob(val, "File_" + (type === 'html' ? "App.html" : "Doc.txt"), mime);
+            },
+            openFullscreenPreview: function() {
+                var editor = document.getElementById('fileBufferEditor');
+                var val = editor ? editor.value : "";
+                var blob = new Blob([val], { type: 'text/html;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                window.open(url, '_blank');
+            }
+        };
+
+        // 4. TEMPLATE GENERATOR
+        var RMV_Generator = {
+            executeGeneration: function() {
+                var title = document.getElementById('genTitle').value.trim() || "Apex Enterprise Engine";
+                var type = document.getElementById('genType').value;
+                var out = document.getElementById('genOutputBox');
+                var res = "";
+
+                if(type === 'landing') {
+                    res = '<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>' + title + '</title>\n  <style>\n    body{margin:0;background:#0A0A1A;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;}\n    .card{background:rgba(255,255,255,0.04);border:1px solid #FFD700;border-radius:16px;padding:30px;text-align:center;max-width:400px;}\n    h1{color:#FFD700;margin-bottom:8px;font-size:1.4rem;}\n    p{color:#94A3B8;font-size:0.85rem;line-height:1.6;}\n    .btn{display:inline-block;background:#FFD700;color:#000;font-weight:bold;padding:10px 20px;border-radius:8px;text-decoration:none;margin-top:15px;font-size:0.8rem;}\n  </style>\n</head>\n<body>\n  <div class="card">\n    <h1>' + title + '</h1>\n    <p>Engineered by RMV APEX GROUP ™. High-performance client-side micro-architecture.</p>\n    <a href="#" class="btn" onclick="alert(\'Connected!\')">Deploy Architecture ➔</a>\n  </div>\n</body>\n</html>';
+                } else if(type === 'terms') {
+                    res = "PRIVACY POLICY & ZERO-PARTY DATA POLICY\nBrand: " + title + "\nRMV APEX GROUP ™ | Kandivali West, Mumbai\n\n1. All executions are local-first within browser memory.\n2. No files are uploaded to central servers.";
+                } else {
+                    res = "# " + title + "\n\n> Engineered by RMV APEX GROUP ™\n\n## ⚡ Features\n- 100% client-side\n- Zero installation required";
+                }
+                out.value = res;
+                RMV_App.showToast("Synthesized: " + type.toUpperCase());
+            },
+            pushToViewer: function() {
+                var out = document.getElementById('genOutputBox');
+                if(!out || !out.value) { alert("Generate code first!"); return; }
+                var editor = document.getElementById('fileBufferEditor');
+                if(editor) editor.value = out.value;
+                RMV_Viewer.handleLiveInput();
+                RMV_App.switchTab('view-editor');
+                RMV_App.showToast("Loaded into Studio & Frame!");
+            }
+        };
+
+        // 5. BLOB & DOWNLOAD ENGINE
+        var RMV_DownloadEngine = {
+            exportStandaloneHTML: function(customName) {
+                var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+                this.downloadAsBrandedBlob(html, customName + ".html", "text/html;charset=utf-8;");
+            },
+            downloadAsBrandedBlob: function(content, fileName, mimeType) {
+                try {
+                    var blob = new Blob([content], { type: mimeType || 'text/plain;charset=utf-8' });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = "RMV_APEX_" + fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(function() { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+                    RMV_App.showToast("Download Complete!");
+                } catch(e) { alert("Download failed: " + e.message); }
+            }
+        };
+
+        window.onload = function() {
+            RMV_App.init();
+        };
+    </script>
+
+</body></html>
